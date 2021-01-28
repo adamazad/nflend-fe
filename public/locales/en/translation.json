@@ -1,0 +1,19 @@
+{
+  "app": {
+    "name": "NFLend"
+  },
+  "pagesTitles": {
+    "home": "Home"
+  },
+  "texts": {
+    "bid": "Bid",
+    "bids": "Bids",
+    "active": "Active",
+    "closed": "Closed",
+    "loading": "Loading",
+    "notFound": "Not Found",
+    "createLoan": "Create Loan",
+    "importNFT": "Import NFT",
+    "back": "Back"
+  }
+}
