@@ -6,11 +6,16 @@ import React from 'react'
 import { Account } from '../Account'
 import { Link } from '../Link'
 
-export function Header() {
+interface HeaderProps {
+  varient?: 'fixed' | 'default'
+}
+
+export function Header({ varient }: HeaderProps) {
   return (
-    <StyledHeader>
+    <StyledHeader varient={varient}>
       <StyledNav>
         <Link to="/dashboard">Dashboard</Link>
+        <Link to="/deposit">Deposit NFT</Link>
         <Link to="/borrow">Borrow</Link>
         <Link to="/lend">Lend</Link>
       </StyledNav>
@@ -23,8 +28,14 @@ const StyledNav = styled.nav(props => ({
   display: 'flex',
 }))
 
-const StyledHeader = styled.header(props => ({
+const StyledHeader = styled.header<HeaderProps>(props => ({
+  position: props.varient === 'fixed' ? 'fixed' : 'relative',
+  height: props.theme.header.height,
   display: 'flex',
   padding: props.theme.space[2],
   justifyContent: 'space-between',
 }))
+
+Header.defaultProps = {
+  variant: 'default',
+}
