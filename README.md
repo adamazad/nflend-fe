@@ -1,5 +1,7 @@
 # NFLend
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f454cfe5-bc21-4dff-aa68-88750b0a68a0/deploy-status)](https://app.netlify.com/sites/saltynft/deploys)
+
 Use your NFT as collateral to take a loan.
 
 ## Build
