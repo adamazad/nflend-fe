@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useCallback } from 'react'
 
 // Layouts
-import { HeaderAndContent } from 'src/layouts/HeaderAndContent'
+import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
 import { Center } from 'src/layouts/Center'
 
 // Hooks
@@ -27,14 +27,14 @@ export function LandingView() {
   }, [activate, history])
 
   return (
-    <HeaderAndContent>
+    <Layout>
       <Container>
         <Center minHeight="100%" minWidth="100%">
           <Heading>Leverage your NFTs</Heading>
           <BorrowButton onClick={onClickBorrow}>Open a Loan</BorrowButton>
         </Center>
       </Container>
-    </HeaderAndContent>
+    </Layout>
   )
 }
 
