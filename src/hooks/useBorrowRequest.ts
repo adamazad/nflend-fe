@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useLoanManager } from './useLoanManager'
 
 // Interfaces
-import { BorrowRequest } from 'src/interfaces/BorrowReuqest'
+import { BorrowRequest } from 'src/interfaces/BorrowRequest'
 
 interface UseBorrowRequestResponse {
   error: Error | false
