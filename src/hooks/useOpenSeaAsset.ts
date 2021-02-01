@@ -3,11 +3,11 @@ import { OpenSeaAsset } from 'opensea-js/lib/types'
 import { useEffect, useState } from 'react'
 
 // APIs
-import { getOpeanSeaAPI } from 'src/contracts'
+import { getOpeanSeaAPI } from 'src/providers'
 
 interface UseOpenSeaAssetsReturn {
   error: Error | false
-  isLoading: boolean
+  loading: boolean
   asset: OpenSeaAsset | null
 }
 
@@ -18,7 +18,7 @@ interface useOpenSeaAssetParams {
 
 export function useOpenSeaAsset(query: useOpenSeaAssetParams, retries?: number | undefined): UseOpenSeaAssetsReturn {
   const [error, setError] = useState<Error | false>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true)
   const [asset, setAsset] = useState<OpenSeaAsset | null>(null)
 
   useEffect(() => {
@@ -28,12 +28,12 @@ export function useOpenSeaAsset(query: useOpenSeaAssetParams, retries?: number |
       .getAsset(query, retries)
       .then(setAsset)
       .catch(setError)
-      .then(() => setIsLoading(false))
+      .then(() => setLoading(false))
   }, [query, retries])
 
   return {
     error,
     asset,
-    isLoading,
+    loading,
   }
 }

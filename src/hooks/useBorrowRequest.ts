@@ -4,34 +4,37 @@ import { useEffect, useState } from 'react'
 // Hooks
 import { useLoanManager } from './useLoanManager'
 
+// Helpers
+import { mapDataToBorrowRequest } from 'src/contracts/helpers'
+
 // Interfaces
 import { BorrowRequest } from 'src/interfaces/BorrowRequest'
 
 interface UseBorrowRequestResponse {
   error: Error | false
-  isLoading: boolean
+  loading: boolean
   borrowRequest: BorrowRequest | undefined
 }
 
 export function useBorrowRequest(borrowRequestId: string): UseBorrowRequestResponse {
   const [borrowRequest, setBorrowRequest] = useState<BorrowRequest>()
   const [error, setError] = useState<Error | false>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true)
   const loanManager = useLoanManager()
 
   useEffect(() => {
     if (loanManager) {
       loanManager
         .borrowRequestById(borrowRequestId)
-        .then(setBorrowRequest)
+        .then(res => setBorrowRequest(mapDataToBorrowRequest(res)))
         .catch(setError)
-        .then(() => setIsLoading(false))
+        .then(() => setLoading(false))
     }
   }, [loanManager, borrowRequestId])
 
   return {
     error,
-    isLoading,
+    loading,
     borrowRequest,
   }
 }
