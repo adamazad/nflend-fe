@@ -1,23 +1,48 @@
 // Externals
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
-// Interfaces
-import { BorrowRequest } from 'src/interfaces/BorrowReuqest'
+// Hooks
+import { useBorrowRequests } from 'src/hooks/useBorrowRequests'
+import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 
 // Components
+import { BorrowRequestCard } from './components/BorrowRequestCard'
 import { Container } from 'src/components/Container'
 
 // Layouts
+import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
 import { Center } from 'src/layouts/Center'
 
-export function BorrowReuqestsView() {
-  const [userNFTs, setUserNFTs] = useState([])
+export function BorrowRequestsView() {
+  const { borrowRequests, error, loading } = useBorrowRequests()
+  const setPageTitle = useSetPageTitle()
 
-  const [borrowRequests, setBorrowRequests] = useState<BorrowRequest[]>([])
+  useEffect(() => {
+    setPageTitle('Borrow Requests')
+  }, [setPageTitle])
+
+  if (loading) {
+    return (
+      <Layout>
+        <Center minHeight="100%">
+          <Container>Loading!</Container>
+        </Center>
+      </Layout>
+    )
+  }
 
   return (
-    <Center minHeight="100%">
-      <Container></Container>
-    </Center>
+    <Layout>
+      <Center minHeight="100%">
+        <Container>
+          {borrowRequests.map(borrowRequest => (
+            <BorrowRequestCard
+              borrowRequest={borrowRequest}
+              key={`${borrowRequest.nftId}-${borrowRequest.cancelTimestamp}`}
+            />
+          ))}
+        </Container>
+      </Center>
+    </Layout>
   )
 }
