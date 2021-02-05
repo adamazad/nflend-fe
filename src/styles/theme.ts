@@ -21,9 +21,9 @@ export type ThemeColors = {
 }
 
 export const colors: ThemeColors = {
-  text: '#000',
-  background: '#fff',
-  primary: '#283618',
+  text: '#fff',
+  background: '#212121',
+  primary: '#fff',
   secondary: '#283618',
   highlightBackground: '#222',
   highlightColor: '#222',
