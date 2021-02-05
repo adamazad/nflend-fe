@@ -11,7 +11,10 @@ interface HeaderProps {
 }
 
 const NavLink = styled(Link)(props => ({
-  color: '#28333d',
+  color: props.theme.colors.primary,
+  ':hover': {
+    color: props.theme.colors.primary,
+  },
 }))
 
 export function Header({ varient }: HeaderProps) {
@@ -37,7 +40,7 @@ const StyledHeader = styled.header<HeaderProps>(props => ({
   position: props.varient === 'fixed' ? 'fixed' : 'relative',
   height: props.theme.header.height,
   display: 'flex',
-  padding: props.theme.space[2],
+  padding: props.theme.space[3],
   justifyContent: 'space-between',
   alignItems: 'center',
 }))
