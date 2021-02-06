@@ -1,11 +1,12 @@
 // Externals
+import { useWeb3React } from '@web3-react/core'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import React from 'react'
 
 // Hooks
+import { useAccountAssets } from 'src/hooks/useAccountAssets'
 import { useOpenSeaAssets } from 'src/hooks/useOpenSeaAssets'
 import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
-import { useMountEffect } from 'src/hooks/useMountEffect'
 
 // Layouts
 import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
@@ -14,16 +15,20 @@ import { Center } from 'src/layouts/Center'
 // Components
 import { NFTAssetCard } from './components/NFTAssetCard'
 import { Container } from 'src/components/Container'
+import { OpenSeaAsset } from 'opensea-js/lib/types'
 
 const NoAssetsMessage = () => <Center>Hmmm ... you do not own any asset</Center>
 
+const isOpenSeaAssetHasImage = (asset: OpenSeaAsset) => asset.imageUrl !== ''
+
 export function LeverageView() {
   const setPageTitle = useSetPageTitle()
-  const { assets, loading } = useOpenSeaAssets()
+  const { assets, error, loading } = useOpenSeaAssets()
+  const { account } = useWeb3React()
 
-  useMountEffect(() => {
+  useEffect(() => {
     setPageTitle('Leverage')
-  })
+  }, [setPageTitle])
 
   if (loading) {
     return (
@@ -51,21 +56,34 @@ export function LeverageView() {
       <Container>
         <HeaderText>Leverage</HeaderText>
         <CardGrid>
-          {assets.map(userAsset => {
-            const key = `${userAsset.tokenId}-${userAsset.assetContract}`
-            return <NFTAssetCard asset={userAsset} key={key} />
-          })}
+          {assets
+            .filter(asset => isOpenSeaAssetHasImage(asset))
+            .map(userAsset => {
+              const key = `${userAsset.tokenId}-${userAsset.assetContract}`
+              return <NFTAssetCard asset={userAsset} key={key} />
+            })}
         </CardGrid>
       </Container>
     </Layout>
   )
 }
 
-const CardGrid = styled.div(props => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gridTemplateRows: 'repeat(3, 1fr)',
-}))
+const CardGrid = styled.div(
+  props => ({
+    display: 'grid',
+    gridTemplateColumns: 'repeat(1, 1fr)',
+    gridTemplateRows: 'repeat(3, 1fr)',
+    gap: props.theme.space[3],
+  }),
+  props => `
+    @media (min-width: ${props.theme.breakpoints[1]}) {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 2fr));
+    }
+    @media (min-width: ${props.theme.breakpoints[2]}) {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 3fr));
+    }
+  `
+)
 
 const HeaderText = styled.h1({
   textAlign: 'center',

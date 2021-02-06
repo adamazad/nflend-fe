@@ -13,9 +13,14 @@ interface NFTAssetCardProps {
 
 const Card = styled(BaseCard)(props => ({
   boxShadow: `5px 5px 0 #000`,
+  background: '#222',
 }))
 
-const CardImage = styled.img(props => ({}))
+const CardImage = styled.img(props => ({
+  maxWidth: '100%',
+  margin: 'auto',
+  display: 'block',
+}))
 
 export function NFTAssetCard({ asset }: NFTAssetCardProps) {
   return (
