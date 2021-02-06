@@ -17,7 +17,7 @@ interface BorrowRequestParams {
   borrowRequestId: string
 }
 
-export function BorrowRuquestsView() {
+export function BorrowRequestView() {
   const { borrowRequestId } = useParams<BorrowRequestParams>()
   const { borrowRequest, error, loading } = useBorrowRequest(borrowRequestId)
   const loanManager = useLoanManager()

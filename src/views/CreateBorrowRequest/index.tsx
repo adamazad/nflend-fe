@@ -20,7 +20,7 @@ import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
 import { Center } from 'src/layouts/Center'
 
 // Utils
-import { convetLocalTimestampToUtc } from 'src/utils'
+import { convertLocalTimestampToUtc } from 'src/utils'
 
 export function CreateBorrowRequestView() {
   const [trxPending, setTrxPending] = useState<boolean>(false)
@@ -36,7 +36,7 @@ export function CreateBorrowRequestView() {
   const [coupon, onChangeCoupon] = useInput(0)
 
   const onSubmit = async () => {
-    const cancelTimestampUtc = convetLocalTimestampToUtc(dayjs().unix())
+    const cancelTimestampUtc = convertLocalTimestampToUtc(dayjs().unix())
 
     if (!loanManager) {
       return alert('No loan manager contract found')
