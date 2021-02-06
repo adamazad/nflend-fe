@@ -21,8 +21,9 @@ export function Header({ varient }: HeaderProps) {
   return (
     <StyledHeader varient={varient}>
       <StyledNav>
-        <NavLink to="/dashboard">Dashboard</NavLink>
-        <NavLink to="/borrow-requests">Requests</NavLink>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/earn">Earn</NavLink>
+        <NavLink to="/leverage">Leverage</NavLink>
       </StyledNav>
       <StyledNav>
         <Account />
