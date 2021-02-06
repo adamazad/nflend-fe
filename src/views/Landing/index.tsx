@@ -41,8 +41,8 @@ export function LandingView() {
 const Heading = styled.h1`
   text-align: center;
   text-transform: uppercase;
-  background: linear-gradient(90deg, #ff5555, #0000ff);
   font-weight: bold;
+  background: linear-gradient(90deg, #ff5555, #0000ff);
   font-size: 8vw;
   color: #000;
   background-clip: text;

@@ -1,9 +1,11 @@
 // Externals
 import styled from 'styled-components'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 // Hooks
 import { useOpenSeaAssets } from 'src/hooks/useOpenSeaAssets'
+import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
+import { useMountEffect } from 'src/hooks/useMountEffect'
 
 // Layouts
 import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
@@ -16,7 +18,12 @@ import { Container } from 'src/components/Container'
 const NoAssetsMessage = () => <Center>Hmmm ... you do not own any asset</Center>
 
 export function LeverageView() {
+  const setPageTitle = useSetPageTitle()
   const { assets, loading } = useOpenSeaAssets()
+
+  useMountEffect(() => {
+    setPageTitle('Leverage')
+  })
 
   if (loading) {
     return (

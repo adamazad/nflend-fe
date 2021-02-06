@@ -1,10 +1,11 @@
 // Externals
 import { OpenSeaAsset } from 'opensea-js/lib/types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 
 // Hooks
 import { useOpenSeaAssets } from 'src/hooks/useOpenSeaAssets'
+import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 import { useLoanManager } from 'src/hooks/useLoanManager'
 import { useInput } from 'src/hooks/useInput'
 
@@ -23,6 +24,7 @@ import { Center } from 'src/layouts/Center'
 import { convertLocalTimestampToUtc } from 'src/utils'
 
 export function CreateBorrowRequestView() {
+  const setPageTitle = useSetPageTitle()
   const [trxPending, setTrxPending] = useState<boolean>(false)
   const { assets, error, loading } = useOpenSeaAssets()
   const loanManager = useLoanManager()
@@ -34,6 +36,10 @@ export function CreateBorrowRequestView() {
   const [currency, onChangeCurrency] = useState('')
   const [amount, onChangeAmount] = useInput(0)
   const [coupon, onChangeCoupon] = useInput(0)
+
+  useEffect(() => {
+    setPageTitle('New Borrow Request')
+  }, [setPageTitle])
 
   const onSubmit = async () => {
     const cancelTimestampUtc = convertLocalTimestampToUtc(dayjs().unix())

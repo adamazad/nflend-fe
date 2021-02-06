@@ -4,7 +4,9 @@ import React, { useCallback } from 'react'
 
 // Hooks
 import { useBorrowRequest } from 'src/hooks/useBorrowRequest'
+import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 import { useLoanManager } from 'src/hooks/useLoanManager'
+import { useMountEffect } from 'src/hooks/useMountEffect'
 
 // Components
 import { Container } from 'src/components/Container'
@@ -18,9 +20,14 @@ interface BorrowRequestParams {
 }
 
 export function BorrowRequestView() {
+  const setPageTitle = useSetPageTitle()
   const { borrowRequestId } = useParams<BorrowRequestParams>()
   const { borrowRequest, error, loading } = useBorrowRequest(borrowRequestId)
   const loanManager = useLoanManager()
+
+  useMountEffect(() => {
+    setPageTitle('Borrow Request')
+  })
 
   const repayLoan = useCallback(async () => {
     try {
