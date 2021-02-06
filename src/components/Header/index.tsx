@@ -10,30 +10,39 @@ interface HeaderProps {
   varient?: 'fixed' | 'default'
 }
 
+const NavLink = styled(Link)(props => ({
+  color: props.theme.colors.primary,
+  ':hover': {
+    color: props.theme.colors.primary,
+  },
+}))
+
 export function Header({ varient }: HeaderProps) {
   return (
     <StyledHeader varient={varient}>
       <StyledNav>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/deposit">Deposit NFT</Link>
-        <Link to="/borrow">Borrow</Link>
-        <Link to="/lend">Lend</Link>
+        <NavLink to="/dashboard">Dashboard</NavLink>
+        <NavLink to="/borrow-requests">Requests</NavLink>
       </StyledNav>
-      <Account />
+      <StyledNav>
+        <Account />
+      </StyledNav>
     </StyledHeader>
   )
 }
 
 const StyledNav = styled.nav(props => ({
   display: 'flex',
+  gap: props.theme.space[3],
 }))
 
 const StyledHeader = styled.header<HeaderProps>(props => ({
   position: props.varient === 'fixed' ? 'fixed' : 'relative',
   height: props.theme.header.height,
   display: 'flex',
-  padding: props.theme.space[2],
+  padding: props.theme.space[3],
   justifyContent: 'space-between',
+  alignItems: 'center',
 }))
 
 Header.defaultProps = {

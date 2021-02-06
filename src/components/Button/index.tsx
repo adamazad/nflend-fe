@@ -34,7 +34,7 @@ export const Button = styled.button<ButtonProps>(
     fontWeight: 400,
     fontFamily: 'inherit',
     lineHeight: 1.5,
-    color: 'black',
+    color: props.theme.colors.primary,
     ':disabled': {
       opacity: 0.5,
     },

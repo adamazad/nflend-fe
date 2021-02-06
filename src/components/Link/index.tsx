@@ -16,9 +16,9 @@ export const Link = styled(LinkBase)<LinkProps>(
   variant({
     variants: {
       default: {
-        color: theme.colors.secondary,
+        color: theme.colors.primary,
         ':hover': {
-          color: theme.colors.secondary,
+          color: theme.colors.primary,
         },
       },
       button: {

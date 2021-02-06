@@ -14,6 +14,8 @@ const ConnectButton = styled(Button)({
   border: 'none',
   fontWeight: 'bold',
   background: 'transparent',
+  padding: 0,
+  outline: 'none',
 })
 
 const AccountText = styled.div({
@@ -21,7 +23,7 @@ const AccountText = styled.div({
 })
 
 export function Account() {
-  const { activate, account } = useWeb3React()
+  const { activate, account, deactivate } = useWeb3React()
 
   const connectWallet = useCallback(() => {
     activate(new InjectedConnector({})).catch(error => {
@@ -29,17 +31,18 @@ export function Account() {
     })
   }, [activate])
 
+  const disconnectWallet = useCallback(() => deactivate(), [deactivate])
+
   if (account) {
     return (
-      <AccountText>
-        {account.slice(0, 3)}...{account.slice(account.length - 3)}
-      </AccountText>
+      <>
+        <AccountText>
+          {account.slice(0, 3)}...{account.slice(account.length - 3)}
+        </AccountText>
+        <ConnectButton onClick={disconnectWallet}>Logout</ConnectButton>
+      </>
     )
   }
 
-  return (
-    <div>
-      <ConnectButton onClick={connectWallet}>Login</ConnectButton>
-    </div>
-  )
+  return <ConnectButton onClick={connectWallet}>Login</ConnectButton>
 }

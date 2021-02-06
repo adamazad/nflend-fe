@@ -5,6 +5,10 @@ import React from 'react'
 import { Header } from 'src/components/Header'
 import { Flex } from 'src/components/Flex'
 
+interface HeaderAndContentProps {
+  gutter?: boolean | number
+}
+
 export const HeaderAndContent: React.FC = ({ children }) => {
   return (
     <Flex flexDirection="column" minHeight="100%">
