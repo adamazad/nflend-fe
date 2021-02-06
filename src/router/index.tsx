@@ -13,7 +13,7 @@ import { EarnView } from 'src/views/Earn'
 export const AppRouter = () => {
   return (
     <Switch>
-      <Route exact path="/lend" component={EarnView} />
+      <Route exact path="/earn" component={EarnView} />
       <Route exact path="/leverage" component={LeverageView} />
       <Route exact path="/borrow-requests" component={BorrowRequestsView} />
       <Route exact path="/borrow-requests/new" component={CreateBorrowRequestView} />

@@ -1,23 +1,20 @@
 // Externals
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 import React from 'react'
 
 // Hooks
+import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 import { useMountEffect } from 'src/hooks/useMountEffect'
-
-// Actions
-import { setPageTitle } from 'src/redux/page'
 
 // Layouts
 import { Center } from 'src/layouts/Center'
 
 export function NotFoundView() {
-  const dispatch = useDispatch()
+  const setPageTitle = useSetPageTitle()
   const [t] = useTranslation()
 
   useMountEffect(() => {
-    dispatch(setPageTitle(t('texts.notFound')))
+    setPageTitle(t('texts.notFound'))
   })
 
   return (

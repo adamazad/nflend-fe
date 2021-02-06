@@ -22,7 +22,7 @@ export function useLoanManager() {
       const contract = LoanManagerFactory.connect(LOAN_MANAGER_ADDRESS, library)
       setLoanManager(contract)
     } catch (e) {
-      console.log('sss')
+      console.log(e)
     }
   }, [library, account])
 

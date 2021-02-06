@@ -5,19 +5,18 @@ import {
 } from '@web3-react/injected-connector'
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Redirect, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import React from 'react'
 
 // Layouts
 import { Center } from 'src/layouts/Center'
 
 // Hooks
+import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 import { useMountEffect } from 'src/hooks/useMountEffect'
 
 // Components
 import { Container } from 'src/components/Container'
 import { Button } from 'src/components/Button'
-import { setPageTitle } from 'src/redux/page'
 import { Card } from 'src/components/Card'
 
 function getErrorMessage(error: Error) {
@@ -36,13 +35,13 @@ function getErrorMessage(error: Error) {
 export function ConnectView() {
   const { account, activate } = useWeb3React()
   const { state } = useLocation()
-  const dispatch = useDispatch()
+  const setPageTitle = useSetPageTitle()
 
   // @ts-ignore
   const nextLocation = state?.referrer || '/borrow'
 
   useMountEffect(() => {
-    dispatch(setPageTitle('Login'))
+    setPageTitle('Login')
   })
 
   const connectWallet = () =>
