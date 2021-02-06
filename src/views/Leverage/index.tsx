@@ -13,6 +13,7 @@ import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
 import { Center } from 'src/layouts/Center'
 
 // Components
+import { ErrorMesssage } from 'src/components/ErrorMessage'
 import { NFTAssetCard } from './components/NFTAssetCard'
 import { Container } from 'src/components/Container'
 import { OpenSeaAsset } from 'opensea-js/lib/types'
@@ -38,6 +39,16 @@ export function LeverageView() {
     )
   }
 
+  if (error) {
+    return (
+      <Layout>
+        <Container>
+          <ErrorMesssage error={error} />
+        </Container>
+      </Layout>
+    )
+  }
+
   // No assets
   if (assets.length === 0) {
     return (
@@ -48,8 +59,6 @@ export function LeverageView() {
       </Layout>
     )
   }
-
-  console.log(assets)
 
   return (
     <Layout>
