@@ -3,6 +3,9 @@ import { Provider } from '@ethersproject/providers'
 import { Route, Switch } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
 
+// Constants
+import { KOVAN_NETWORK_ID } from 'src/constants'
+
 // Views
 import { CreateBorrowRequestView } from 'src/views/CreateBorrowRequest'
 import { BorrowRequestsView } from 'src/views/BorrowRequests'
@@ -12,8 +15,6 @@ import { LeverageView } from 'src/views/Leverage'
 import { NotFoundView } from 'src/views/NotFound'
 import { LandingView } from 'src/views/Landing'
 import { EarnView } from 'src/views/Earn'
-
-const KOVAN_NETWORK_ID = 42
 
 export const AppRouter = () => {
   const { chainId, active } = useWeb3React<Provider>()

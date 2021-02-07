@@ -4,9 +4,11 @@ import { useCallback, useEffect, useState } from 'react'
 // Hooks
 import { useLoanManager } from './useLoanManager'
 
+// Helpers
+import { mapDataToBorrowRequest } from 'src/contracts/helpers'
+
 // Interfaces
 import { BorrowRequest } from 'src/interfaces/BorrowRequest'
-import { mapDataToBorrowRequest } from 'src/contracts/helpers'
 
 interface UseBorrowRequestsResponse {
   error: Error | false
@@ -24,6 +26,7 @@ export function useBorrowRequests(): UseBorrowRequestsResponse {
     // Return value
     const allBorrowRequests: BorrowRequest[] = []
 
+    console.log(loanManager)
     if (!loanManager) return allBorrowRequests
 
     // Get total

@@ -14,27 +14,12 @@ import { ERC721Factory } from 'src/contracts'
 
 // Interfaces
 import { TokenMetadata } from 'src/interfaces/TokenMetadata'
+import { fetchTokenURIData } from 'src/contracts/mNFT'
 
 interface UseAccountAssetsReturn {
   error: Error | false
   loading: boolean
   assets: OpenSeaAsset[]
-}
-
-const tokenURICacheMap = new Map<string, TokenMetadata>()
-
-async function fetchTokenURIData(url: string) {
-  // Retrieve from cache
-  if (tokenURICacheMap.has(url)) {
-    return tokenURICacheMap.get(url) as TokenMetadata
-  }
-
-  const { data } = await Axios.get<TokenMetadata>(url)
-
-  // Cache
-  tokenURICacheMap.set(url, data)
-
-  return data
 }
 
 export function useAccountAssets(account: string): UseAccountAssetsReturn {

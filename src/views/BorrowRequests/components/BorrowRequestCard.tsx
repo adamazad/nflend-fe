@@ -1,11 +1,11 @@
 // Externals
-import { useWeb3React } from '@web3-react/core'
+import styled from 'styled-components'
 import React from 'react'
 
 // Components
+import { Card as BaseCard } from 'src/components/Card'
 import { CardTitle } from 'src/components/CardTitle'
 import { CardBody } from 'src/components/CardBody'
-import { Card } from 'src/components/Card'
 
 // Interfaces
 import { BorrowRequest } from 'src/interfaces/BorrowRequest'
@@ -15,17 +15,26 @@ interface BorrowRequestCardComponentProps {
   borrowRequest: BorrowRequest
 }
 
+const Card = styled(BaseCard)(props => ({
+  boxShadow: `5px 5px 0 #000`,
+  background: '#222',
+}))
+
+const CardImage = styled.img(props => ({
+  display: 'block',
+  maxWidth: '100%',
+  margin: 'auto',
+}))
+
 export function BorrowRequestCard({ borrowRequest }: BorrowRequestCardComponentProps) {
   const { asset, error, loading } = useOpenSeaAsset({
     tokenAddress: borrowRequest.nft,
     tokenId: borrowRequest.nftId.toNumber(),
   })
 
-  const { account } = useWeb3React()
-
   if (loading) {
     return (
-      <Card>
+      <Card minHeight={300}>
         <CardBody>loading</CardBody>
       </Card>
     )
@@ -33,8 +42,8 @@ export function BorrowRequestCard({ borrowRequest }: BorrowRequestCardComponentP
 
   if (!asset) {
     return (
-      <Card>
-        <CardBody>Not asset</CardBody>
+      <Card minHeight={300}>
+        <CardBody>No asset</CardBody>
       </Card>
     )
   }
@@ -42,7 +51,11 @@ export function BorrowRequestCard({ borrowRequest }: BorrowRequestCardComponentP
   return (
     <Card>
       <CardBody>
-        <CardTitle>{asset.assetContract.name}</CardTitle>
+        <CardImage src={asset.imageUrl} />
+      </CardBody>
+      <CardBody>
+        <CardTitle>{asset.name}</CardTitle>
+        <div>${borrowRequest.coupon.toString()}</div>
       </CardBody>
     </Card>
   )

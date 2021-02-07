@@ -1,25 +1,26 @@
 // Externals
-import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
 import React, { useEffect } from 'react'
+import styled from 'styled-components'
 
 // Hooks
-import { useOpenSeaAssets } from 'src/hooks/useOpenSeaAssets'
+import { useBorrowRequests } from 'src/hooks/useBorrowRequests'
 import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 
 // Layouts
 import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
-import { Center } from 'src/layouts/Center'
 
 // Components
+import { PageHeader } from 'src/components/PageHeader'
 import { Container } from 'src/components/Container'
-
-const NoAssetsMessage = () => <Center>Hmmm ... you do not own any asset</Center>
+import { CardTitle } from 'src/components/CardTitle'
+import { CardBody } from 'src/components/CardBody'
+import { Card } from 'src/components/Card'
+import { Link } from 'src/components/Link'
+import { BorrowRequestCard } from '../BorrowRequests/components/BorrowRequestCard'
 
 export function EarnView() {
   const setPageTitle = useSetPageTitle()
-  const [t] = useTranslation()
-  const { assets, loading } = useOpenSeaAssets()
+  const { borrowRequests, error, loading } = useBorrowRequests()
 
   useEffect(() => {
     setPageTitle('Earn')
@@ -34,12 +35,10 @@ export function EarnView() {
   }
 
   // No assets
-  if (assets.length === 0) {
+  if (borrowRequests.length === 0) {
     return (
       <Layout>
-        <Container>
-          <NoAssetsMessage />
-        </Container>
+        <Container></Container>
       </Layout>
     )
   }
@@ -47,8 +46,18 @@ export function EarnView() {
   return (
     <Layout>
       <Container>
-        <HeaderText>Earn</HeaderText>
-        <CardGrid></CardGrid>
+        <PageHeader title="Earn" />
+        <CardGrid>
+          {borrowRequests.map((borrowRequest, borrowRequestId) => {
+            const key = `${borrowRequest.nft}-${borrowRequest.nftId}`
+
+            return (
+              <Link key={key} to={`/borrow-requests/${borrowRequestId}`}>
+                <BorrowRequestCard borrowRequest={borrowRequest} />
+              </Link>
+            )
+          })}
+        </CardGrid>
       </Container>
     </Layout>
   )
@@ -59,10 +68,3 @@ const CardGrid = styled.div(props => ({
   gridTemplateColumns: 'repeat(3, 1fr)',
   gridTemplateRows: 'repeat(3, 1fr)',
 }))
-
-const HeaderText = styled.h1({
-  textAlign: 'center',
-  fontSize: '6vw',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-})
