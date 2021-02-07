@@ -61,6 +61,16 @@ export function LeverageView() {
     )
   }
 
+  if (error) {
+    return (
+      <Layout>
+        <Container>
+          <ErrorMesssage error={error} />
+        </Container>
+      </Layout>
+    )
+  }
+
   // No assets
   if (assets.length === 0) {
     return (
