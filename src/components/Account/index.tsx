@@ -16,6 +16,7 @@ const ConnectButton = styled(Button)({
   background: 'transparent',
   padding: 0,
   outline: 'none',
+  textTransform: 'unset',
 })
 
 const AccountText = styled.div({

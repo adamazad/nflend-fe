@@ -7,7 +7,7 @@ export type ThemeRadii = {
 }
 
 export const radii: ThemeRadii = {
-  base: '4px',
+  base: '8px',
   circle: '50%',
 }
 

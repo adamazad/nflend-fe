@@ -27,13 +27,13 @@ export const Button = styled.button<ButtonProps>(
     verticalAlign: 'middle',
     userSelect: 'none',
     backgroundColor: 'transparent',
-    border: `1px solid ${props.theme.colors.primary}`,
-    // @TODO: Move radis to Theme
+    border: `2px solid #fff`,
     borderRadius: props.rounded ? '32px' : props.theme.radii.base,
     fontSize: '1rem',
     fontWeight: 400,
     fontFamily: 'inherit',
     lineHeight: 1.5,
+    textTransform: 'uppercase',
     color: props.theme.colors.primary,
     ':disabled': {
       opacity: 0.5,
@@ -49,7 +49,7 @@ export const Button = styled.button<ButtonProps>(
   variant({
     variants: {
       primary: {
-        bg: 'white',
+        bg: '#212121',
       },
       link: {
         bg: 'transparent',
