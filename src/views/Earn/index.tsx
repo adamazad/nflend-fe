@@ -1,6 +1,5 @@
 // Externals
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 
 // Hooks
 import { useBorrowRequests } from 'src/hooks/useBorrowRequests'
@@ -10,17 +9,15 @@ import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
 
 // Components
+import { BorrowRequestCard } from '../BorrowRequests/components/BorrowRequestCard'
 import { PageHeader } from 'src/components/PageHeader'
 import { Container } from 'src/components/Container'
-import { CardTitle } from 'src/components/CardTitle'
-import { CardBody } from 'src/components/CardBody'
-import { Card } from 'src/components/Card'
+import { CardGrid } from 'src/components/CardGrid'
 import { Link } from 'src/components/Link'
-import { BorrowRequestCard } from '../BorrowRequests/components/BorrowRequestCard'
 
 export function EarnView() {
   const setPageTitle = useSetPageTitle()
-  const { borrowRequests, error, loading } = useBorrowRequests()
+  const { borrowRequests, loading } = useBorrowRequests()
 
   useEffect(() => {
     setPageTitle('Earn')
@@ -62,9 +59,3 @@ export function EarnView() {
     </Layout>
   )
 }
-
-const CardGrid = styled.div(props => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gridTemplateRows: 'repeat(3, 1fr)',
-}))

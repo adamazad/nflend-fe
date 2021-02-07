@@ -20,6 +20,7 @@ import { Card, CardProps } from 'src/components/Card'
 import { FormGroup } from 'src/components/FormGroup'
 import { CardBody } from 'src/components/CardBody'
 import { Button } from 'src/components/Button'
+import { Link } from 'src/components/Link'
 
 // Layouts
 import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
@@ -31,6 +32,7 @@ import { PageHeader } from 'src/components/PageHeader'
 
 // Constants
 import { LOAN_MANAGER_ADDRESS, MOCK_NFT_CONTRACT_ADDRESS } from 'src/constants'
+
 // Contracts
 import { ERC721Factory } from 'src/contracts'
 
@@ -51,6 +53,7 @@ const LIQUIDATION_THRESHOLD_FACTOR = 1.5
 export function CreateBorrowRequestView() {
   const setPageTitle = useSetPageTitle()
   const { account, library } = useWeb3React()
+  const [createdBorrowRequest, setCreatedborrowRequest] = useState<boolean>(false)
   const [trxPending, setTrxPending] = useState<boolean>(false)
   const { assets, error, loading } = useAccountAssets(account as string)
   const loanManager = useLoanManager()
@@ -126,11 +129,11 @@ export function CreateBorrowRequestView() {
       const isApproved = await isNFTApproved()
 
       if (!isApproved) {
-        const approveTx = await approveNFT()
+        await approveNFT()
       }
 
       // Create the borrow request
-      const createBorrowRequestTx = await loanManager.createBorrowRequest(
+      await loanManager.createBorrowRequest(
         currency.address,
         asset.tokenAddress,
         asset.tokenId as string,
@@ -140,11 +143,23 @@ export function CreateBorrowRequestView() {
         cancelTimestampUtc,
         duration
       )
+
+      setCreatedborrowRequest(true)
     } catch (txError) {
       console.log(txError)
     }
 
     setTrxPending(false)
+  }
+
+  if (createdBorrowRequest) {
+    return (
+      <Layout>
+        <Center minHeight="100%" minWidth="100%">
+          Borrow Request has been created. <Link to="/borrow-requests/">View All</Link>
+        </Center>
+      </Layout>
+    )
   }
 
   if (!account) {
@@ -157,7 +172,7 @@ export function CreateBorrowRequestView() {
     )
   }
 
-  if (loading || trxPending) {
+  if (loading) {
     return (
       <Layout>
         <Container>Fetching your OpenSea assets ...</Container>
