@@ -2,7 +2,6 @@
 import { OpenSeaAsset } from 'opensea-js/lib/types'
 import { useWeb3React } from '@web3-react/core'
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 
 // Hooks
 import { useAccountAssets } from 'src/hooks/useAccountAssets'
@@ -17,6 +16,7 @@ import { ErrorMesssage } from 'src/components/ErrorMessage'
 import { NFTAssetCard } from './components/NFTAssetCard'
 import { PageHeader } from 'src/components/PageHeader'
 import { Container } from 'src/components/Container'
+import { CardGrid } from 'src/components/CardGrid'
 import { Link } from 'src/components/Link'
 
 const isOpenSeaAssetHasImage = (asset: OpenSeaAsset) => asset.imageUrl !== ''
@@ -108,20 +108,3 @@ export function LeverageView() {
     </Layout>
   )
 }
-
-const CardGrid = styled.div(
-  props => ({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(1, 1fr)',
-    gridTemplateRows: 'repeat(3, 1fr)',
-    gap: props.theme.space[3],
-  }),
-  props => `
-    @media (min-width: ${props.theme.breakpoints[1]}) {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 2fr));
-    }
-    @media (min-width: ${props.theme.breakpoints[2]}) {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 3fr));
-    }
-  `
-)
