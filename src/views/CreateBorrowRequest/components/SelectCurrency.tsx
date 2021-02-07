@@ -1,13 +1,12 @@
 // Externals
 import Select from 'react-select'
+import { DAI_CONTRACT_ADDRESS } from 'src/constants'
 
-const mapCurrencyToSelect = (asset: Currency) => ({
-  label: asset.name,
-  value: asset.id,
-})
+// Styles
+import { styles } from 'src/styles/select'
 
-interface Currency {
-  id: string
+export interface Currency {
+  address: string
   name: string
 }
 
@@ -18,37 +17,22 @@ interface SelectCurrencyProps {
 
 export const CURRENCY_LIST: Currency[] = [
   {
-    id: '0xc2118d4d90b274016cb7a54c03ef52e6c537d957',
+    address: DAI_CONTRACT_ADDRESS,
     name: 'DAI',
-  },
-  {
-    id: '0x0d9c8723b343a8368bebe0b5e89273ff8d712e3c',
-    name: 'USDC',
-  },
-  {
-    id: '0x0d9c8723b343a8368bebe0b5e89273ff8d712e3c',
-    name: 'TUSD',
-  },
-  {
-    id: '0x0d9c8723b343a8368bebe0b5e89273ff8d712e3c',
-    name: 'YFI',
   },
 ]
 
-export function SelectCurrency({ currencies = CURRENCY_LIST, onChange }: SelectCurrencyProps) {
+export function SelectCurrency({ currencies = CURRENCY_LIST, onChange = () => {} }: SelectCurrencyProps) {
   return (
     <Select
+      styles={styles}
       placeholder="Select a currency"
-      defaultInputValue={'DAI'}
-      options={currencies.map(mapCurrencyToSelect)}
+      options={currencies}
+      defaultValue={currencies[0]}
+      getOptionLabel={option => option.name}
+      getOptionValue={option => option.address}
       isMulti={false}
-      onChange={value =>
-        onChange &&
-        onChange({
-          id: value?.value,
-          name: value?.label,
-        } as Currency)
-      }
+      onChange={value => value && onChange(value)}
     />
   )
 }
