@@ -1,11 +1,12 @@
 // Externals
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 // Hooks
 import { useLoanManager } from './useLoanManager'
 
 // Interfaces
 import { BorrowRequest } from 'src/interfaces/BorrowRequest'
+import { mapDataToBorrowRequest } from 'src/contracts/helpers'
 
 interface UseBorrowRequestsResponse {
   error: Error | false
@@ -19,15 +20,35 @@ export function useBorrowRequests(): UseBorrowRequestsResponse {
   const [loading, setLoading] = useState<boolean>(true)
   const loanManager = useLoanManager()
 
-  useEffect(() => {
-    if (loanManager) {
-      loanManager
-        .borrowRequestById(0)
-        // .then(setBorrowRequests)
-        .catch(setError)
-        .then(() => setLoading(false))
+  const fetchBorrowRequests = useCallback(async () => {
+    // Return value
+    const allBorrowRequests: BorrowRequest[] = []
+
+    if (!loanManager) return allBorrowRequests
+
+    // Get total
+    const totalBorrowRequestCount = await loanManager.getTotalRequestCount()
+
+    // Get each borrowRequest
+    for (let i = 0; i < totalBorrowRequestCount.toNumber(); i++) {
+      try {
+        const res = await loanManager.borrowRequestById(i)
+
+        allBorrowRequests.push(mapDataToBorrowRequest(res))
+      } catch (e) {
+        console.log(e)
+      }
     }
+
+    return allBorrowRequests
   }, [loanManager])
+
+  useEffect(() => {
+    fetchBorrowRequests()
+      .then(setBorrowRequests)
+      .catch(setError)
+      .finally(() => setLoading(false))
+  }, [loanManager, fetchBorrowRequests])
 
   return {
     error,
