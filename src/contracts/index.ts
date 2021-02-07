@@ -3,8 +3,10 @@
 /* eslint-disable */
 export type { ERC20 } from './ERC20'
 export type { ERC721 } from './ERC721'
+export type { LendingPool } from './LendingPool'
 export type { LoanManager } from './LoanManager'
 
 export { ERC20Factory } from './factories/ERC20__factory'
 export { ERC721Factory } from './factories/ERC721__factory'
+export { LendingPoolFactory } from './factories/LendingPool__factory'
 export { LoanManagerFactory } from './factories/LoanManager__factory'
