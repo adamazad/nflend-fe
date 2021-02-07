@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react'
 
 type OnChange = (event: ChangeEvent<HTMLInputElement>) => void
 
-export function useInput<S>(defaultValue: S): [S, OnChange] {
+export function useInput<S = any>(defaultValue: S): [S, OnChange] {
   const [value, setValue] = useState(defaultValue)
 
   return [
