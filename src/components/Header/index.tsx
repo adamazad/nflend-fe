@@ -6,6 +6,8 @@ import React from 'react'
 import { Account } from '../Account'
 import { Link } from '../Link'
 
+import { ReactComponent as NFLendSVG } from 'src/assets/svg/NFLend.svg'
+
 interface HeaderProps {
   varient?: 'fixed' | 'default'
 }
@@ -21,9 +23,15 @@ export function Header({ varient }: HeaderProps) {
   return (
     <StyledHeader varient={varient}>
       <StyledNav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/earn">Earn</NavLink>
-        <NavLink to="/leverage">Leverage</NavLink>
+        <NavLink to="/" title="Home">
+          <NFLendSVG width={40} height={40} />
+        </NavLink>
+        <NavLink to="/earn" title="Earn">
+          Earn
+        </NavLink>
+        <NavLink to="/leverage" title="Leverage">
+          Leverage
+        </NavLink>
       </StyledNav>
       <StyledNav>
         <Account />
@@ -35,6 +43,7 @@ export function Header({ varient }: HeaderProps) {
 const StyledNav = styled.nav(props => ({
   display: 'flex',
   gap: props.theme.space[3],
+  alignItems: 'center',
 }))
 
 const StyledHeader = styled.header<HeaderProps>(props => ({

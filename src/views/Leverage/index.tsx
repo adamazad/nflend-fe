@@ -1,11 +1,11 @@
 // Externals
+import { OpenSeaAsset } from 'opensea-js/lib/types'
 import { useWeb3React } from '@web3-react/core'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 // Hooks
 import { useAccountAssets } from 'src/hooks/useAccountAssets'
-import { useOpenSeaAssets } from 'src/hooks/useOpenSeaAssets'
 import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 
 // Layouts
@@ -13,27 +13,60 @@ import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
 import { Center } from 'src/layouts/Center'
 
 // Components
+import { ErrorMesssage } from 'src/components/ErrorMessage'
 import { NFTAssetCard } from './components/NFTAssetCard'
 import { Container } from 'src/components/Container'
-import { OpenSeaAsset } from 'opensea-js/lib/types'
-
-const NoAssetsMessage = () => <Center>Hmmm ... you do not own any asset</Center>
+import { Link } from 'src/components/Link'
 
 const isOpenSeaAssetHasImage = (asset: OpenSeaAsset) => asset.imageUrl !== ''
 
 export function LeverageView() {
   const setPageTitle = useSetPageTitle()
-  const { assets, error, loading } = useOpenSeaAssets()
   const { account } = useWeb3React()
+  const { assets, error, loading } = useAccountAssets(account as string)
 
   useEffect(() => {
     setPageTitle('Leverage')
   }, [setPageTitle])
 
+  if (!account) {
+    return (
+      <Layout>
+        <Center minHeight="100%" minWidth="100%">
+          <Container>Connect</Container>
+        </Center>
+      </Layout>
+    )
+  }
+
   if (loading) {
     return (
       <Layout>
-        <Container>Finding NFTs</Container>
+        <Center minHeight="100%" minWidth="100%">
+          <Container>Finding Your NFTs</Container>
+        </Center>
+      </Layout>
+    )
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <Center minHeight="100%" minWidth="100%">
+          <Container>
+            <ErrorMesssage error={error} />
+          </Container>
+        </Center>
+      </Layout>
+    )
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <Container>
+          <ErrorMesssage error={error} />
+        </Container>
       </Layout>
     )
   }
@@ -42,14 +75,12 @@ export function LeverageView() {
   if (assets.length === 0) {
     return (
       <Layout>
-        <Container>
-          <NoAssetsMessage />
-        </Container>
+        <Center minHeight="100%" minWidth="100%">
+          <Container>Hmmm ... you do not own any asset</Container>
+        </Center>
       </Layout>
     )
   }
-
-  console.log(assets)
 
   return (
     <Layout>
@@ -60,7 +91,16 @@ export function LeverageView() {
             .filter(asset => isOpenSeaAssetHasImage(asset))
             .map(userAsset => {
               const key = `${userAsset.tokenId}-${userAsset.assetContract}`
-              return <NFTAssetCard asset={userAsset} key={key} />
+
+              return (
+                <Link
+                  key={key}
+                  to={`/borrow-requests/new?tokenId=${userAsset.tokenId}&tokenContract=${userAsset.assetContract.address}`}
+                  title="Leverage this NFT as collateral"
+                >
+                  <NFTAssetCard asset={userAsset} />
+                </Link>
+              )
             })}
         </CardGrid>
       </Container>
