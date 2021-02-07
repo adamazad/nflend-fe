@@ -240,7 +240,7 @@ export function CreateBorrowRequestView() {
                 </FormNote>
               </FormGroup>
               <FormGroup>
-                <Button disabled={setTrxPending} type="submit">
+                <Button disabled={trxPending} type="submit">
                   Create
                 </Button>
               </FormGroup>
