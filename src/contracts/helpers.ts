@@ -105,7 +105,7 @@ export function mapFakeAavegotchiToOpenSeaAsset(data: TokenMetadata, tokenId: st
       user: null,
     },
     sellOrders: null,
-    tokenAddress: '',
+    tokenAddress: MOCK_NFT_CONTRACT_ADDRESS,
     tokenId,
     traits: [],
     transferFee: null,
