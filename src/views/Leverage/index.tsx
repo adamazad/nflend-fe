@@ -15,6 +15,7 @@ import { Center } from 'src/layouts/Center'
 // Components
 import { ErrorMesssage } from 'src/components/ErrorMessage'
 import { NFTAssetCard } from './components/NFTAssetCard'
+import { PageHeader } from 'src/components/PageHeader'
 import { Container } from 'src/components/Container'
 import { Link } from 'src/components/Link'
 
@@ -85,7 +86,7 @@ export function LeverageView() {
   return (
     <Layout>
       <Container>
-        <HeaderText>Leverage</HeaderText>
+        <PageHeader title="Leverage" />
         <CardGrid>
           {assets
             .filter(asset => isOpenSeaAssetHasImage(asset))
@@ -124,10 +125,3 @@ const CardGrid = styled.div(
     }
   `
 )
-
-const HeaderText = styled.h1({
-  textAlign: 'center',
-  fontSize: '6vw',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-})
