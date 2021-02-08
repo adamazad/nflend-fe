@@ -1,5 +1,5 @@
 // Externals
-import { InfuraProvider, Provider } from '@ethersproject/providers'
+import { InfuraProvider, Provider, Web3Provider } from '@ethersproject/providers'
 import { OpenSeaAPI } from 'opensea-js'
 
 // Constants
@@ -29,9 +29,10 @@ export const getLoanManagerContract = (contractAddress: string, provider: Provid
   return LoanManagerFactory.connect(contractAddress, provider)
 }
 
-/**
- *
- */
-export const getOpeanSeaAPI = () => {
-  return new OpenSeaAPI({})
+export const getOpeanSeaAPI = () => new OpenSeaAPI({})
+
+export const getWeb3Provider = () => {
+  if ('ethereum' in window) {
+    return new Web3Provider((window as any).ethereum)
+  }
 }

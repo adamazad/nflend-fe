@@ -1,25 +1,23 @@
 // Externals
-import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
 import React, { useEffect } from 'react'
 
 // Hooks
-import { useOpenSeaAssets } from 'src/hooks/useOpenSeaAssets'
+import { useBorrowRequests } from 'src/hooks/useBorrowRequests'
 import { useSetPageTitle } from 'src/hooks/useSetPageTitle'
 
 // Layouts
 import { HeaderAndContent as Layout } from 'src/layouts/HeaderAndContent'
-import { Center } from 'src/layouts/Center'
 
 // Components
+import { BorrowRequestCard } from '../BorrowRequests/components/BorrowRequestCard'
+import { PageHeader } from 'src/components/PageHeader'
 import { Container } from 'src/components/Container'
-
-const NoAssetsMessage = () => <Center>Hmmm ... you do not own any asset</Center>
+import { CardGrid } from 'src/components/CardGrid'
+import { Link } from 'src/components/Link'
 
 export function EarnView() {
   const setPageTitle = useSetPageTitle()
-  const [t] = useTranslation()
-  const { assets, loading } = useOpenSeaAssets()
+  const { borrowRequests, loading } = useBorrowRequests()
 
   useEffect(() => {
     setPageTitle('Earn')
@@ -34,12 +32,10 @@ export function EarnView() {
   }
 
   // No assets
-  if (assets.length === 0) {
+  if (borrowRequests.length === 0) {
     return (
       <Layout>
-        <Container>
-          <NoAssetsMessage />
-        </Container>
+        <Container></Container>
       </Layout>
     )
   }
@@ -47,22 +43,19 @@ export function EarnView() {
   return (
     <Layout>
       <Container>
-        <HeaderText>Earn</HeaderText>
-        <CardGrid></CardGrid>
+        <PageHeader title="Earn" />
+        <CardGrid>
+          {borrowRequests.map((borrowRequest, borrowRequestId) => {
+            const key = `${borrowRequest.nft}-${borrowRequest.nftId}`
+
+            return (
+              <Link key={key} to={`/lend/${borrowRequestId}`}>
+                <BorrowRequestCard borrowRequest={borrowRequest} />
+              </Link>
+            )
+          })}
+        </CardGrid>
       </Container>
     </Layout>
   )
 }
-
-const CardGrid = styled.div(props => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gridTemplateRows: 'repeat(3, 1fr)',
-}))
-
-const HeaderText = styled.h1({
-  textAlign: 'center',
-  fontSize: '6vw',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-})

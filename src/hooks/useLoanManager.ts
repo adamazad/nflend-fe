@@ -1,5 +1,4 @@
 // Externals
-import { Provider } from '@ethersproject/providers'
 import { useWeb3React } from '@web3-react/core'
 import { useEffect, useState } from 'react'
 
@@ -8,19 +7,21 @@ import { LoanManager, LoanManagerFactory } from 'src/contracts'
 
 // Constants
 import { LOAN_MANAGER_ADDRESS } from 'src/constants'
-
-// Interfaces
+import { getWeb3Provider } from 'src/providers'
 
 export function useLoanManager() {
   const [loanManager, setLoanManager] = useState<LoanManager>()
-  const { library, account } = useWeb3React<Provider>()
+  const { library, account } = useWeb3React()
 
   useEffect(() => {
-    if (!library) return
+    const provider = library ? library.getSigner() : getWeb3Provider()
 
     try {
-      const contract = LoanManagerFactory.connect(LOAN_MANAGER_ADDRESS, library)
+      const w: any = window // debug
+      const contract = LoanManagerFactory.connect(LOAN_MANAGER_ADDRESS, provider)
       setLoanManager(contract)
+
+      w.loanManager = contract
     } catch (e) {
       console.log(e)
     }

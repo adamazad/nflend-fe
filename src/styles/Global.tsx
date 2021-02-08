@@ -13,10 +13,10 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
   }
 
-  ::selection {
-    background-color: #222;
+  /* ::selection {
+    background-color: #80bdff;
     color: #fff;
-  }
+  } */
 
   body {
     -webkit-font-smoothing: antialiased;
@@ -114,16 +114,16 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
+    color: #fff;
+    background-color: ${props => props.theme.black};
     background-clip: padding-box;
     border: 1px solid ${props => props.theme.black};
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
 
   input:focus {
-    color: #495057;
-    background-color: #fff;
+    color: #fff;
+    background-color: ${props => props.theme.black};
     border-color: #80bdff;
     outline: 0;
   }

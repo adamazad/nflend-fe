@@ -113,7 +113,7 @@ export function LendView() {
       const delegationTx = await debitToken.approveDelegation(LOAN_MANAGER_ADDRESS, ethers.constants.MaxUint256)
       await delegationTx.wait(1)
       const fulfillTx = await loanManager.fulfillRequest(borrowRequestId, '2')
-      await delegationTx.wait(1)
+      await fulfillTx.wait(1)
       setFulfilled(true)
     } catch (txError) {
       console.log(txError)
