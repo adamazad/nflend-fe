@@ -113,8 +113,10 @@ export function LendView() {
       const debitToken = DebtTokenFactory.connect(debtTokenAddress, library.getSigner())
 
       // Approve delegation
-      await debitToken.approveDelegation(LOAN_MANAGER_ADDRESS, ethers.constants.MaxUint256)
+      const delegationTx = await debitToken.approveDelegation(LOAN_MANAGER_ADDRESS, ethers.constants.MaxUint256)
+      await delegationTx.wait(2)
       const fulfillTx = await loanManager.fulfillRequest(borrowRequestId, '2')
+      await delegationTx.wait(2)
     } catch (txError) {
       console.log(txError)
     }
@@ -130,6 +132,7 @@ export function LendView() {
           <CardBody>
             <form onSubmit={onSubmit}>
               <FormGroup>
+                <label>APR Type</label>
                 <SelectRateMode onChange={setRateMode} />
               </FormGroup>
               <FormGroup>
