@@ -15,6 +15,7 @@ import { LeverageView } from 'src/views/Leverage'
 import { NotFoundView } from 'src/views/NotFound'
 import { LandingView } from 'src/views/Landing'
 import { EarnView } from 'src/views/Earn'
+import { LendView } from 'src/views/Lend'
 
 export const AppRouter = () => {
   const { chainId, active } = useWeb3React<Provider>()
@@ -25,11 +26,12 @@ export const AppRouter = () => {
 
   return (
     <Switch>
-      <Route exact path="/earn" component={EarnView} />
-      <Route exact path="/leverage" component={LeverageView} />
-      <Route exact path="/borrow-requests" component={BorrowRequestsView} />
+      <Route exact path="/lend/:borrowRequestId" component={LendView} />
       <Route exact path="/borrow-requests/new" component={CreateBorrowRequestView} />
       <Route exact path="/borrow-requests/:borrowRequestId" component={BorrowRequestView} />
+      <Route exact path="/borrow-requests" component={BorrowRequestsView} />
+      <Route exact path="/earn" component={EarnView} />
+      <Route exact path="/leverage" component={LeverageView} />
       <Route exact path="/" component={LandingView} />
       <Route exact path="*" component={NotFoundView} />
     </Switch>
