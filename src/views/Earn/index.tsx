@@ -49,7 +49,7 @@ export function EarnView() {
             const key = `${borrowRequest.nft}-${borrowRequest.nftId}`
 
             return (
-              <Link key={key} to={`/borrow-requests/${borrowRequestId}`}>
+              <Link key={key} to={`/lend/${borrowRequestId}`}>
                 <BorrowRequestCard borrowRequest={borrowRequest} />
               </Link>
             )
