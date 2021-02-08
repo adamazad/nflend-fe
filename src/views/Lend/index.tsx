@@ -109,10 +109,11 @@ export function LendView() {
       // Determine the APR type
       const debtTokenAddress = rateMode?.value === 'fixed' ? stableDebtTokenAddress : variableDebtTokenAddress
 
+      console.log({ debtTokenAddress })
       const debitToken = DebtTokenFactory.connect(debtTokenAddress, library.getSigner())
 
       // Approve delegation
-      // await debitToken.approveDelegation(LOAN_MANAGER_ADDRESS, ethers.constants.MaxUint256)
+      await debitToken.approveDelegation(LOAN_MANAGER_ADDRESS, ethers.constants.MaxUint256)
       const fulfillTx = await loanManager.fulfillRequest(borrowRequestId, '2')
     } catch (txError) {
       console.log(txError)
