@@ -132,6 +132,7 @@ export function LendView() {
           <CardBody>
             <form onSubmit={onSubmit}>
               <FormGroup>
+                <label>APR Type</label>
                 <SelectRateMode onChange={setRateMode} />
               </FormGroup>
               <FormGroup>
